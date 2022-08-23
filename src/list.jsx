@@ -11,7 +11,7 @@ class List extends React.Component {
         super(props);
         let { min, max, step, options, value, type, itemHeight } = props;
         let list = getArrayByMinmax({ min, max, step });
-        let { startY, curIndex } = getIndexByValue(list, value);
+        let { startY, curIndex } = getIndexByValue(list, value, itemHeight);
         let coptions = {
             ...options
         };
@@ -24,7 +24,7 @@ class List extends React.Component {
         this.scrollEnd = this.scrollEnd.bind(this);
     }
     scrollEnd(iScrollInstance) {
-        let { onSelect, scope, index, type } = this.props;
+        let { onSelect, scope, index, type, itemHeight } = this.props;
         let y = iScrollInstance.y;
         const _height = itemHeight || ITEMHEIGHT
         const _halfHeight = itemHeight ? Math.round(itemHeight / 2) : HALFITEMHEIGHT
@@ -48,9 +48,9 @@ class List extends React.Component {
         }
     }
     componentDidUpdate() {
-        let { value } = this.props;
+        let { value, itemHeight } = this.props;
         let { list } = this.state;
-        let { startY } = getIndexByValue(list, value);
+        let { startY } = getIndexByValue(list, value, itemHeight);
         this.refs.iscroll.withIScroll(true, function (iScroll) {
             if (iScroll.y != startY) {
                 iScroll.scrollTo(0, startY);
