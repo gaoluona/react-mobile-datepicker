@@ -1,20 +1,20 @@
-import {ONEDAY, EMPTY, ITEMHEIGHT} from './constant';
-function polishNum(num){
+import { ONEDAY, EMPTY, ITEMHEIGHT } from './constant';
+function polishNum(num) {
     let tnum = '00' + num;
     tnum = tnum.slice(-2);
     return tnum;
 }
 //格式化时间
 export const formatDate = (time) => {
-    time = typeof time !== 'number' ? parseInt(time,10) : time; 
+    time = typeof time !== 'number' ? parseInt(time, 10) : time;
     let cdate = time ? new Date(time) : new Date();
     return {
-        year : cdate.getFullYear(),
-        month : cdate.getMonth() + 1,
-        date : cdate.getDate(),
-        hour : cdate.getHours(),
-        minute : cdate.getMinutes(),
-        second : cdate.getSeconds()
+        year: cdate.getFullYear(),
+        month: cdate.getMonth() + 1,
+        date: cdate.getDate(),
+        hour: cdate.getHours(),
+        minute: cdate.getMinutes(),
+        second: cdate.getSeconds()
     }
 }
 //拆分时间
@@ -32,41 +32,41 @@ export const SplitDate = (time) => {
     let dhour = polishNum(hour);
     let dminute = polishNum(minute);
     let dsecond = polishNum(second);
-    return{
-        'YYYY' : year,
-        'YY' : year.toString().slice(-2),
-        'MM' : dmonth,
-        'M' : month,
-        'DD' : ddate,
-        'D' : ndate,
-        'hh' : dhour,
-        'h' : hour,
-        'mm' : dminute,
-        'm' : minute,
-        'ss' : dsecond,
-        's' : second
+    return {
+        'YYYY': year,
+        'YY': year.toString().slice(-2),
+        'MM': dmonth,
+        'M': month,
+        'DD': ddate,
+        'D': ndate,
+        'hh': dhour,
+        'h': hour,
+        'mm': dminute,
+        'm': minute,
+        'ss': dsecond,
+        's': second
     }
 }
 //映射year,month
 export const getTypeByKey = (key) => {
     let result = '';
-    switch(key){
-        case 'YYYY':case 'YY':
+    switch (key) {
+        case 'YYYY': case 'YY':
             result = 'year';
             break;
-        case 'MM':case 'M':
+        case 'MM': case 'M':
             result = 'month';
             break;
-        case 'DD':case 'D':
+        case 'DD': case 'D':
             result = 'date';
             break;
-        case 'hh':case 'h':
+        case 'hh': case 'h':
             result = 'hour';
             break;
-        case 'mm':case 'm':
+        case 'mm': case 'm':
             result = 'minute';
             break;
-        case 'ss':case 's':
+        case 'ss': case 's':
             result = 'second';
             break;
         default:
@@ -82,10 +82,10 @@ export const getCurrentMonthLastDay = (year, month) => {
     return lastDate.getDate();
 }
 //重置min
-export function resetMin({type, minDate, firstType, firstValue}){
+export function resetMin({ type, minDate, firstType, firstValue }) {
     let result = '';
     let isMin = minDate[firstType] == firstValue;
-    switch(type){
+    switch (type) {
         case 'hour':
             result = isMin ? minDate.hour : 0;
             break;
@@ -108,10 +108,10 @@ export function resetMin({type, minDate, firstType, firstValue}){
     return result;
 }
 //重置max
-export function resetMax({type, maxDate, firstType, firstValue, dateMax}){
+export function resetMax({ type, maxDate, firstType, firstValue, dateMax }) {
     let result = '';
     let isMax = maxDate[firstType] == firstValue;
-    switch(type){
+    switch (type) {
         case 'hour':
             result = isMax ? maxDate.hour : 23;
             break;
@@ -134,10 +134,10 @@ export function resetMax({type, maxDate, firstType, firstValue, dateMax}){
     return result;
 }
 //根据type生成对应的min
-export function getMin({type, curTime, yearRange, date}){
+export function getMin({ type, curTime, yearRange, date }) {
     type = getTypeByKey(type);
     let result = '';
-    switch(type){
+    switch (type) {
         case 'hour':
             result = date ? date.hour : 0;
             break;
@@ -163,10 +163,10 @@ export function getMin({type, curTime, yearRange, date}){
     return result;
 }
 //根据type生成对应的max
-export function getMax({type, curTime, yearRange, date}){
+export function getMax({ type, curTime, yearRange, date }) {
     type = getTypeByKey(type);
     let result = '';
-    switch(type){
+    switch (type) {
         case 'hour':
             result = date ? date.hour : 23;
             break;
@@ -192,10 +192,10 @@ export function getMax({type, curTime, yearRange, date}){
     return result;
 }
 //根据min和max生成对应的数组
-export const getArrayByMinmax = ({min, max, step}) => {
+export const getArrayByMinmax = ({ min, max, step }) => {
     let arr = EMPTY.concat();
     step = step || 1;
-    for(let i=min;i<=max;i+=step){
+    for (let i = min; i <= max; i += step) {
         arr.push(i);
     }
     arr = arr.concat(EMPTY);
@@ -207,41 +207,41 @@ const GAPTYPE_REG = /[\u4e00-\u9fa5a-zA-Z]/gi;
 //根据format解析时间格式,例如{YYYY}-{MM}-{DD} {hh}:{mm}:{ss}
 export const getForm = (format) => {
     let formarr = format.match(FORMAT_REG);
-    if(formarr != null){
-        formarr = formarr.map(function(item, n){
+    if (formarr != null) {
+        formarr = formarr.map(function (item, n) {
             return item.slice(1, -1);
         });
     }
     let textarr = format.match(FORMAT_GAP);
-    if(textarr != null){
-        textarr = textarr.map(function(item, n){
+    if (textarr != null) {
+        textarr = textarr.map(function (item, n) {
             let tmp = item.slice(1, item.length);
             tmp = tmp.match(GAPTYPE_REG);
             return tmp != null ? tmp[0] : '';
         });
     }
     return {
-        text : textarr,
-        form : formarr
+        text: textarr,
+        form: formarr
     }
 }
 //根据format格式输出对应的数组
-export const getTimePoint = ({times, minuteStep, yearRange, formats, curTime, minDate, maxDate}) => {
+export const getTimePoint = ({ times, minuteStep, yearRange, formats, curTime, minDate, maxDate }) => {
     let arr = [];
-    for(let i=0,len=times.length;i<len;i++){
+    for (let i = 0, len = times.length; i < len; i++) {
         let temp = SplitDate(times[i]);
         let tarr = [];
         let formArr = formats.form;
         let textArr = formats.text;
-        for(var j=0,lenj=formArr.length;j<lenj;j++){
+        for (var j = 0, lenj = formArr.length; j < lenj; j++) {
             let ttype = getTypeByKey(formArr[j]);
             tarr.push({
-                value : temp[formArr[j]],
-                min : getMin({type : formArr[j], curTime, yearRange, date : minDate}),
-                max : getMax({type : formArr[j], curTime, yearRange, date : maxDate}),
-                step : ttype == 'minute' ? minuteStep : 1,
-                suffix : textArr[j] || '',
-                type : ttype
+                value: temp[formArr[j]],
+                min: getMin({ type: formArr[j], curTime, yearRange, date: minDate }),
+                max: getMax({ type: formArr[j], curTime, yearRange, date: maxDate }),
+                step: ttype == 'minute' ? minuteStep : 1,
+                suffix: textArr[j] || '',
+                type: ttype
             });
         }
         arr.push(tarr);
@@ -249,16 +249,17 @@ export const getTimePoint = ({times, minuteStep, yearRange, formats, curTime, mi
     return arr;
 }
 //根据value找出数组中的位置
-export const getIndexByValue = (list, value) => {
+export const getIndexByValue = (list, value, itemH) => {
     let curIndex = 3;
-    for(let i=0,len=list.length;i<len;i++){
-        if(list[i] == value){
+    for (let i = 0, len = list.length; i < len; i++) {
+        if (list[i] == value) {
             curIndex = i;
             break;
         }
     }
-    let startY = -(curIndex - 3) * ITEMHEIGHT;
-    return{
+    const _height = itemH || ITEMHEIGHT
+    let startY = -(curIndex - 3) * _height;
+    return {
         curIndex,
         startY
     }
@@ -268,29 +269,29 @@ export const getValueByType = (arr, type) => {
     arr = arr || [];
     let value;
     let index = -1;
-    for(let i=0,len=arr.length;i<len;i++){
-        if(arr[i].type == type){
+    for (let i = 0, len = arr.length; i < len; i++) {
+        if (arr[i].type == type) {
             value = arr[i].value;
             index = i;
             break;
         }
     }
-    return {value, index};
+    return { value, index };
 }
 //计算text
-function transDate(time, format){
-    if(!time || !format){
+function transDate(time, format) {
+    if (!time || !format) {
         return '';
     }
     let dateobj = SplitDate(time)
     let farr = format.match(FORMAT_REG);
-    if(!farr){
+    if (!farr) {
         return format;
     }
     let nstr = format;
-    for(let i=0,len=farr.length;i<len;i++){
-        let tstr = farr[i].slice(1,-1);
-        nstr = nstr.replace(farr[i],dateobj[tstr]);
+    for (let i = 0, len = farr.length; i < len; i++) {
+        let tstr = farr[i].slice(1, -1);
+        nstr = nstr.replace(farr[i], dateobj[tstr]);
     }
     return nstr;
 }
@@ -305,8 +306,8 @@ export const getTimeValue = (arr, format, curtime) => {
     let cDate = new Date(year, month - 1, ndate, hour, minute, second);
     let value = cDate.getTime();
     return {
-        text : transDate(value, format),
-        value : value
+        text: transDate(value, format),
+        value: value
     }
 }
 
