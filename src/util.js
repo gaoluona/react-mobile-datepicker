@@ -258,6 +258,7 @@ export const getIndexByValue = (list, value, itemH) => {
         }
     }
     const _height = itemH || ITEMHEIGHT
+    curIndex = curIndex < 3 ? 3 : curIndex
     let startY = -(curIndex - 3) * _height;
     return {
         curIndex,
