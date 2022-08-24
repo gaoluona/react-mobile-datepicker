@@ -3,27 +3,27 @@ import ReactDOM from 'react-dom';
 import "../assets/index.less";
 import DateView from '../src/index.jsx';
 
-class Test extends Component{
-    constructor(props){
+class Test extends Component {
+    constructor(props) {
         super(props);
         this.state = {
-            text : ''
+            text: ''
         }
         this.show = this.show.bind(this);
         this.save = this.save.bind(this);
     }
-    save(result){
+    save(result) {
         let text = result.text;
         this.setState({
             text
         });
     }
-    show(){
+    show() {
         this.date.show();
     }
-    render(){
-        let {text} = this.state;
-        return(
+    render() {
+        let { text } = this.state;
+        return (
             <div>
                 <div>
                     <span onClick={this.show}>选择日期</span>
@@ -31,7 +31,13 @@ class Test extends Component{
                 <p>
                     {text}
                 </p>
-                <DateView onDone={this.save} format="{YYYY}年{MM}月{DD}日 {hh}时{mm}分{ss}秒" ref={(ref) => {this.date = ref}} yearRange={3}></DateView>
+                <DateView
+                    onDone={this.save}
+                    format="{YYYY}年{MM}月{DD}日 {hh}时{mm}分{ss}秒"
+                    ref={(ref) => { this.date = ref }}
+                    yearRange={3}
+                    minDate={new Date('2021/08/22 00:00:00').getTime()}
+                ></DateView>
             </div>
         )
     }

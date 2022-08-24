@@ -1,6 +1,6 @@
 {
   "name": "react-mobile-timepicker",
-  "version": "1.1.4",
+  "version": "1.1.5",
   "description": "A componet named datepicker for React",
   "main": "lib/index.js",
   "author": "Caoren <caor1987@gmail.com>",
