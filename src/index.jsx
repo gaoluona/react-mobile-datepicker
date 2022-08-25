@@ -7,8 +7,8 @@ import List from './list';
 class TimePicker extends Component {
     constructor(props) {
         super(props);
-        let { 
-            show, minuteStep, yearRange, value, currentTime, format, minDate, maxDate ,
+        let {
+            show, minuteStep, yearRange, value, currentTime, format, minDate, maxDate,
             enterTime, itemHeight, selectClass, maskClass
         } = props;
         let formats = this.formats = getForm(format);
@@ -157,7 +157,7 @@ class TimePicker extends Component {
             </div>
         );
         return (
-            <div>
+            <div className='c-timeroot' style={show ? { display: 'block' } : { display: 'none', overflow: 'hidden' }}>
                 <CSSTransition in={show} classNames="timemask" timeout={enterTime} mountOnEnter={true} unmountOnExit={true}>
                     <div className={`c-timemask ${maskClass}`} onClick={self.close}></div>
                 </CSSTransition>
