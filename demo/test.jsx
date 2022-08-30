@@ -33,10 +33,11 @@ class Test extends Component {
                 </p>
                 <DateView
                     onDone={this.save}
-                    format="{YYYY}年{MM}月{DD}日 {hh}时{mm}分{ss}秒"
                     ref={(ref) => { this.date = ref }}
-                    yearRange={3}
+                    format="{YYYY}年{MM}月{DD}日 {hh}时"
                     minDate={new Date('2021/08/22 00:00:00').getTime()}
+                    yearRange={1000}
+                    currentTime={Date.now()}
                 ></DateView>
             </div>
         )
