@@ -36,7 +36,7 @@ class Test extends Component {
                     ref={(ref) => { this.date = ref }}
                     format="{YYYY}年{MM}月{DD}日 {hh}时"
                     minDate={new Date('2021/08/22 00:00:00').getTime()}
-                    yearRange={1000}
+                    yearRange={100}
                     currentTime={Date.now()}
                 ></DateView>
             </div>

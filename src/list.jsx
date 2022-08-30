@@ -23,9 +23,19 @@ class List extends React.Component {
         };
         this.scrollEnd = this.scrollEnd.bind(this);
     }
-    // componentDidMount() {
-
-    // }
+    componentDidMount() {
+        // console.log('componentDidMount:', this.refs.iscroll);
+        let { itemHeight, onSelect, scope, index, type } = this.props;
+        let { list } = this.state;
+        this.refs.iscroll.withIScroll(true, function (iScroll) {
+            console.log('iScroll.y:', iScroll.y);
+            const _height = itemHeight || ITEMHEIGHT
+            let scrollY = iScroll.y;
+            let cur = Math.abs(Math.round(scrollY / _height)) + 3;
+            let _value = list[cur];
+            onSelect && onSelect({ value: _value, scope, index, type });
+        });
+    }
     componentWillReceiveProps(nextProps) {
         let { min, max, step, options, value, type } = nextProps;
         let list = getArrayByMinmax({ min, max, step });
